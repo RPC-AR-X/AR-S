@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <termios.h>
 #include <unistd.h>
+
 #include <array>
 #include <condition_variable>
 #include <mutex>
@@ -56,11 +57,11 @@ private:
     int epoll_fd_;
 
     std::thread epoll_cycle;
-    std::queue<std::string> shell_output_queue_;
     std::mutex queue_mutex_;
-    std::condition_variable data_notifier;
     std::atomic<bool> running_{true};
     std::atomic_flag writing_in_progress_;
+    std::condition_variable data_notifier_;
+    std::queue<std::string> shell_output_queue_;
 
     OutputCallback output_callback_;
 
@@ -97,6 +98,7 @@ public:
 
             auto* reactor = new ShellReactor(master_fd, pid);
             reactor->Start();
+
             return reactor;
         } catch (const std::exception& e) {
             std::cerr << "ShellReactor creation failed: " << e.what() << std::endl;

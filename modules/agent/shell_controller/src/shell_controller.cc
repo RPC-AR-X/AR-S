@@ -55,12 +55,12 @@ ShellReactor::ShellReactor(int master_fd, pid_t pid, OutputCallback output_callb
                         if (errno != EAGAIN) {
                             std::unique_lock<std::mutex> lock(queue_mutex_);
                             shell_output_queue_.push("");
-                            data_notifier.notify_one();
+                            data_notifier_.notify_one();
                         }
                     } else if (count == 0) {
                         std::unique_lock<std::mutex> lock(queue_mutex_);
                         shell_output_queue_.push("");
-                        data_notifier.notify_one();
+                        data_notifier_.notify_one();
                         break;
                     } else {
                         std::string shell_data(buffer, count);
@@ -68,7 +68,7 @@ ShellReactor::ShellReactor(int master_fd, pid_t pid, OutputCallback output_callb
                             std::unique_lock<std::mutex> lock(queue_mutex_);
                             shell_output_queue_.push(shell_data);
                         }
-                        data_notifier.notify_one();
+                        data_notifier_.notify_one();
                         DoNextWrite();
                         break;
                     }

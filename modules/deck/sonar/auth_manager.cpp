@@ -45,6 +45,7 @@ void AuthManager::setupGithub() {
     m_oauth->setRequestedScopeTokens({"repo", "user"});
 }
 
+// TODO: Gitlab fetch method
 void AuthManager::setupGitlab() {
     // Not implemented yet
 }

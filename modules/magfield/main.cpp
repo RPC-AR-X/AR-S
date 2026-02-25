@@ -1,9 +1,10 @@
+#include <iostream>
+#include <vector>
+
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/Message.h>
 #include <sdbus-c++/Types.h>
 #include <sdbus-c++/sdbus-c++.h>
-#include <iostream>
-#include <vector>
 
 int main() {
 
