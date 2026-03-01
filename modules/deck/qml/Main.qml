@@ -300,6 +300,7 @@ ApplicationWindow {
                                     Shape {
                                         Layout.preferredWidth: 24
                                         Layout.preferredHeight: 24
+                                        Layout.leftMargin: 6
                                         ShapePath {
                                             strokeWidth: 0
                                             fillColor: githubSignInBtn.down ? Theme.polarNight1 : Theme.snowStorm1 

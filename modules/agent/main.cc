@@ -10,6 +10,8 @@
 
 #include "shell_controller.hh"
 
+//TODO: Need to implement PQC securing of gRPC channel
+
 int main(int argc, char** argv) {
 
     grpc::reflection::InitProtoReflectionServerBuilderPlugin();
