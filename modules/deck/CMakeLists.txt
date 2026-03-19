@@ -6,7 +6,9 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick DBus NetworkAuth)
 
 add_executable(deck
         main.cpp
-        utils/json_network_manager.hpp
+        lib/json_network_manager.hpp
+        lib/oauth2_device_flow.hpp
+        lib/oauth2_device_flow.cpp
         sonar/sonar_view_model.hpp
         sonar/sonar_view_model.cpp
         sonar/auth_manager.hpp

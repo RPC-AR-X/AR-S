@@ -2,8 +2,7 @@
 #include <QDBusInterface>
 #include <QDBusPendingCallWatcher>
 #include <QDBusPendingReply>
-
-class QOAuth2DeviceAuthorizationFlow;
+#include "lib/oauth2_device_flow.hpp"
 
 namespace Ars {
 namespace Deck {
@@ -28,7 +27,7 @@ private slots:
     void onAuthFinished();
 
 private:
-    QOAuth2DeviceAuthorizationFlow* m_oauth;
+    OAuth2DeviceFlow m_oauth;
     QDBusInterface* m_dbusInterface;
 };
 }  // namespace Deck

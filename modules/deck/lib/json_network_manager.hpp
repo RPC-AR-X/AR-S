@@ -2,6 +2,7 @@
 
 #include <qabstractoauth.h>
 #include <qdebug.h>
+#include <qlocale.h>
 #include <qnetworkaccessmanager.h>
 #include <qnetworkreply.h>
 #include <qnetworkrequest.h>
@@ -22,7 +23,24 @@ protected:
         QNetworkRequest newRequest = request;
 
         newRequest.setRawHeader("Accept", "application/json");
-        return QNetworkAccessManager::createRequest(operation, newRequest, outgoingData);
+        newRequest.setRawHeader("User-Agent", "Deck");
+        newRequest.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+
+        QNetworkReply* reply = QNetworkAccessManager::createRequest(operation, newRequest, outgoingData);
+        connect(reply, &QNetworkReply::finished, reply, [reply]() {
+            qDebug() << "--- Network Request ---";
+            qDebug() << "URL:" << reply->url().toString();
+            qDebug() << "Status:" << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
+            QByteArray data = reply->peek(reply->bytesAvailable());
+            qDebug() << "Body:" << data;
+            qDebug() << "-----------------------";
+        });
+
+        return reply;
     }
+
+private:
 };
+
 }  // namespace Ars::Deck
