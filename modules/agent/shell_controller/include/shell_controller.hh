@@ -28,23 +28,23 @@ public:
 
     explicit ShellReactor(int master_fd, pid_t pid, OutputCallback output_callback = nullptr);
 
-    Agent::ExecuteShellRequest* GetRequest() { return &request_; }
+    Agent::ExecuteShellRequest* GetRequest() { return &m_request; }
 
-    void Start() { StartRead(&request_); }
+    void Start() { StartRead(&m_request); }
 
     void OnReadDone(bool ok) override;
     void OnWriteDone(bool ok) override;
 
     void OnDone() override {
-        running_ = false;
-        close(master_fd_);
+        m_running = false;
+        close(m_master_fd);
 
-        if (epoll_cycle.joinable()) {
-            epoll_cycle.join();
+        if (m_epoll_cycle.joinable()) {
+            m_epoll_cycle.join();
         }
 
-        waitpid(pid_, nullptr, 0);
-        close(epoll_fd_);
+        waitpid(m_pid, nullptr, 0);
+        close(m_epoll_fd);
 
         delete this;
     }
@@ -52,21 +52,21 @@ public:
 private:
     void DoNextWrite();
 
-    int master_fd_;
-    pid_t pid_;
-    int epoll_fd_;
+    int m_master_fd;
+    pid_t m_pid;
+    int m_epoll_fd;
 
-    std::thread epoll_cycle;
-    std::mutex queue_mutex_;
-    std::atomic<bool> running_{true};
-    std::atomic_flag writing_in_progress_;
-    std::condition_variable data_notifier_;
-    std::queue<std::string> shell_output_queue_;
+    std::thread m_epoll_cycle;
+    std::mutex m_queue_mutex;
+    std::atomic<bool> m_running{true};
+    std::atomic_flag m_writing_in_progress;
+    std::condition_variable m_data_notifier;
+    std::queue<std::string> m_shell_output_queue;
 
-    OutputCallback output_callback_;
+    OutputCallback m_output_callback;
 
-    Agent::ExecuteShellRequest request_;
-    Agent::ExecuteShellResponse response_;
+    Agent::ExecuteShellRequest m_request;
+    Agent::ExecuteShellResponse m_response;
 };
 
 class AbortedReactor : public grpc::ServerBidiReactor<Agent::ExecuteShellRequest, Agent::ExecuteShellResponse> {
@@ -74,9 +74,7 @@ public:
     explicit AbortedReactor(const grpc::Status& status) { Finish(status); }
 
     void OnDone() override { delete this; }
-
     void OnReadDone(bool ok) override {}
-
     void OnWriteDone(bool ok) override {}
 };
 

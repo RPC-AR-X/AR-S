@@ -1,4 +1,4 @@
-//Standart Includes
+//Standard Includes
 #include <fcntl.h>
 #include <sys/epoll.h>
 #include <sys/wait.h>
@@ -9,66 +9,54 @@
 
 namespace Ars::Controller::Shell {
 ShellReactor::ShellReactor(int master_fd, pid_t pid, OutputCallback output_callback)
-    : master_fd_(master_fd), pid_(pid), output_callback_(std::move(output_callback)) {
-    epoll_fd_ = epoll_create1(0);
-    if (epoll_fd_ == -1) {
+    : m_master_fd(master_fd), m_pid(pid), m_output_callback(std::move(output_callback)) {
+    m_epoll_fd = epoll_create1(0);
+    if (m_epoll_fd == -1) {
         throw std::runtime_error("Failed to create epoll instance: " + std::string(strerror(errno)));
-    }
-
-    pid_ = forkpty(&master_fd_, nullptr, nullptr, nullptr);
-    if (pid_ == -1) {
-        close(epoll_fd_);
-        throw std::runtime_error("Failed to forkpty: " + std::string(strerror(errno)));
-    }
-
-    if (pid_ == 0) {
-        execlp("bash", "bash", nullptr);
-        perror("execlp failed");
-        exit(1);
     }
 
     epoll_event event{};
     event.events = EPOLLIN;
-    event.data.fd = master_fd_;
+    event.data.fd = m_master_fd;
 
-    if (epoll_ctl(epoll_fd_, EPOLL_CTL_ADD, master_fd_, &event) == -1) {
-        close(master_fd_);
-        close(epoll_fd_);
-        waitpid(pid_, nullptr, 0);
+    if (epoll_ctl(m_epoll_fd, EPOLL_CTL_ADD, m_master_fd, &event) == -1) {
+        close(m_master_fd);
+        close(m_epoll_fd);
+        waitpid(m_pid, nullptr, 0);
         throw std::runtime_error("Failed to epoll_ctl: " + std::string(strerror(errno)));
     }
 
-    epoll_cycle = std::thread([&]() {
+    m_epoll_cycle = std::thread([&]() {
         epoll_event events[10];
-        while (running_ == true) {
-            int nfds = epoll_wait(epoll_fd_, events, 10, -1);
+        while (m_running == true) {
+            int nfds = epoll_wait(m_epoll_fd, events, 10, -1);
             if (nfds == -1) {
                 std::cerr << "epoll_wait error\n";
                 break;
             }
 
             for (int i = 0; i < nfds; ++i) {
-                if (events[i].data.fd == master_fd_) {
+                if (events[i].data.fd == m_master_fd) {
                     char buffer[1024];
-                    ssize_t count = read(master_fd_, buffer, sizeof(buffer));
+                    ssize_t count = read(m_master_fd, buffer, sizeof(buffer));
                     if (count == -1) {
                         if (errno != EAGAIN) {
-                            std::unique_lock<std::mutex> lock(queue_mutex_);
-                            shell_output_queue_.push("");
-                            data_notifier_.notify_one();
+                            std::unique_lock<std::mutex> lock(m_queue_mutex);
+                            m_shell_output_queue.push("");
+                            m_data_notifier.notify_one();
                         }
                     } else if (count == 0) {
-                        std::unique_lock<std::mutex> lock(queue_mutex_);
-                        shell_output_queue_.push("");
-                        data_notifier_.notify_one();
+                        std::unique_lock<std::mutex> lock(m_queue_mutex);
+                        m_shell_output_queue.push("");
+                        m_data_notifier.notify_one();
                         break;
                     } else {
                         std::string shell_data(buffer, count);
                         {
-                            std::unique_lock<std::mutex> lock(queue_mutex_);
-                            shell_output_queue_.push(shell_data);
+                            std::unique_lock<std::mutex> lock(m_queue_mutex);
+                            m_shell_output_queue.push(shell_data);
                         }
-                        data_notifier_.notify_one();
+                        m_data_notifier.notify_one();
                         DoNextWrite();
                         break;
                     }
@@ -80,16 +68,16 @@ ShellReactor::ShellReactor(int master_fd, pid_t pid, OutputCallback output_callb
 
 void ShellReactor::OnReadDone(bool ok) {
     if (ok) {
-        std::string shell_prompt = request_.command();
-        write(master_fd_, shell_prompt.c_str(), shell_prompt.length());
-        StartRead(&request_);
+        std::string shell_prompt = m_request.command();
+        write(m_master_fd, shell_prompt.c_str(), shell_prompt.length());
+        StartRead(&m_request);
     } else {
         Finish(grpc::Status::OK);
     }
 }
 
 void ShellReactor::OnWriteDone(bool ok) {
-    writing_in_progress_.clear();
+    m_writing_in_progress.clear();
 
     if (ok) {
         DoNextWrite();
@@ -100,30 +88,30 @@ void ShellReactor::OnWriteDone(bool ok) {
 }
 
 void ShellReactor::DoNextWrite() {
-    if (writing_in_progress_.test_and_set()) {
+    if (m_writing_in_progress.test_and_set()) {
         return;
     }
 
-    std::unique_lock<std::mutex> lock(queue_mutex_);
-    if (shell_output_queue_.empty()) {
-        writing_in_progress_.clear();
+    std::unique_lock<std::mutex> lock(m_queue_mutex);
+    if (m_shell_output_queue.empty()) {
+        m_writing_in_progress.clear();
         return;
     }
 
-    std::string data = shell_output_queue_.front();
-    shell_output_queue_.pop();
+    std::string data = m_shell_output_queue.front();
+    m_shell_output_queue.pop();
     lock.unlock();
 
     if (data.empty()) {
-        if (!output_callback_) {
+        if (!m_output_callback) {
             Finish(grpc::Status::OK);
         }
     } else {
-        if (output_callback_) {
-            output_callback_(data);
+        if (m_output_callback) {
+            m_output_callback(data);
         } else {
-            response_.set_output(data);
-            StartWrite(&response_);
+            m_response.set_output(data);
+            StartWrite(&m_response);
         }
     }
 }
