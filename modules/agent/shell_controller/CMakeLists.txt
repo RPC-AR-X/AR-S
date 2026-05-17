@@ -1,5 +1,6 @@
 add_library(shell_controller
     src/shell_controller.cc
+    src/fd_handler.cc
 )
 
 target_include_directories(shell_controller PUBLIC
