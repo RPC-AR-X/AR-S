@@ -35,7 +35,8 @@ Independent background services, each executing specific domain logic and commun
 |---|---|---|
 | **Interlink** | ![In Progress](https://img.shields.io/badge/status-in%20progress-yellow) | Sovereign communications subsystem natively integrating the encrypted Matrix protocol. |
 | **Sonar** | ![Active](https://img.shields.io/badge/status-active-green) | Native OS-level monitoring for CI/CD pipelines and development workflows. |
-| **Magfield** | ![Planned](https://img.shields.io/badge/status-planned-lightgrey) | System-level scenario-based automation engine. |
+| **Magfield** | ![Planned](https://img.shields.io/badge/status-planned-lightgrey) | System-level scenario-based auto-VPN engine. |
+| **Rotor** | ![In Progress](https://img.shields.io/badge/status-in%20progress-yellow) | Dual-state Tor Browser with seamless switching between convenience and clean isolation. |
 
 ## Getting Started
 
@@ -66,3 +67,4 @@ cmake --build build
 - [x] **Autumn 2025** - MVP of Deck (UI) with Sonar
 - [x] **Winter 2025-2026** - JSON view in Deck & Backend Refactoring
 - [x] **Spring 2026** - MVP of Interlink
+- [ ] **Summer - Autumn 2026** - MVP of Rotor
