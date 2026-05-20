@@ -29,8 +29,9 @@ The module is divided into several isolated components with strict responsibilit
     * Displays secure approval dialogs before protected actions are executed.
 
 * **Vault**:
-    * Dedicated encrypted credential storage daemon.
-    * The only component allowed to directly access and manage sensitive user secrets such as passwords and authentication data.
+    * Secure credential mediation daemon built around the system secret storage backend.
+    * Acts as the only authorized gateway between Rotor components and KWallet.
+    * Enforces credential access policy and controlled secret delivery.
 
 * **Profile Swapper**:
     * Manages transitions between browser environments.
