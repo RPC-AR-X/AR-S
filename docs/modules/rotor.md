@@ -5,9 +5,13 @@
 
 ## Overview
 
-Rotor is the privacy orchestration layer of the **Advanced Reliable System (AR-S)**. It extends the standard Tor Browser with an optional convenience-oriented environment while preserving the ability to instantly return to a clean isolated Tor session.
+Rotor is the privacy orchestration layer of the **Advanced Reliable System (AR-S)**. It extends the standard Tor Browser with an optional convenience mode with possibility to instantly return to a clean isolated Tor session.
 
 The module is designed around reversible state transitions, allowing advanced integrations and persistent workflows without permanently modifying the trusted Tor runtime.
+
+## Communication Model
+
+**D-Bus** for internal Rotor components, and **Native Messaging API** for interaction between Tor Browser and ReD.
 
 ## Architecture
 > ⚠ Architecture is currently under active development and may change significantly between revisions.

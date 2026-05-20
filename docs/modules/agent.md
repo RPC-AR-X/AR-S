@@ -9,6 +9,10 @@ Agent is the external airlock of the **Advanced Reliable System (AR-S)**. It fun
 
 It acts as a protocol bridge: receiving encrypted gRPC commands from the network and translating them into local system calls or D-Bus messages for specific modules (Sonar, MagField).
 
+## Communication Model
+
+Communication is strictly typed via Protocol Buffers.
+
 ## Architecture
 
 The Agent architecture is built around the **Controller Injection** pattern, where the gRPC service delegates actual execution to specialized internal controllers.
@@ -22,10 +26,6 @@ The Agent architecture is built around the **Controller Injection** pattern, whe
 2.  **Internal Controllers**:
     * **Shell Controller** (`Active`): Provides encapsulated access to system shell execution. Unlike a raw SSH session, it executes pre-validated command sets or restricted shell environments.
     * **Sonar Controller** (`Planned`): Acts as a telemetry relay. It proxies remote requests from the mobile app (AR-A) to the local `org.ars.sonar` D-Bus service, allowing the user to view pipeline statuses remotely without direct access to the host's session bus.
-
-## Interlink Protocol (gRPC)
-
-Communication is strictly typed via Protocol Buffers.
 
 * **Port:** Default `50051` (Configurable)
 * **Definition:** `protocols/grpc/agent/agent.proto`
