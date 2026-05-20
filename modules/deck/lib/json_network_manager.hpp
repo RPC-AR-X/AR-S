@@ -1,13 +1,6 @@
 #pragma once
 
-#include <qabstractoauth.h>
-#include <qdebug.h>
-#include <qlocale.h>
-#include <qnetworkaccessmanager.h>
-#include <qnetworkreply.h>
-#include <qnetworkrequest.h>
-#include <qobject.h>
-#include <qtmetamacros.h>
+//Libs
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>

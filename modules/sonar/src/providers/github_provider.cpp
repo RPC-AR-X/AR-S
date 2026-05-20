@@ -1,8 +1,7 @@
-//Libs
-#include "providers/github_provider.h"
-
 //Standard includes
 #include <string>
+
+#include "providers/github_provider.h"
 
 GitHubProvider::GitHubProvider() {
     std::cout << "Clear Start. Wait for token..." << std::endl;

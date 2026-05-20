@@ -1,12 +1,10 @@
-#include "sonar_view_model.hpp"
-#include <qcontainerfwd.h>
-#include <qlogging.h>
-#include <qtdbusglobal.h>
-#include <qtypes.h>
+//Libs
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QVariant>
+
+#include "sonar_view_model.hpp"
 
 const QString SONAR_SERVICE_NAME = "org.ars.sonar";
 const QString SONAR_OBJECT_PATH = "/org/ars/sonar";

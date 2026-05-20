@@ -1,5 +1,6 @@
 #pragma once
 
+//Libs
 #include <QNetworkAccessManager>
 #include <QObject>
 #include <QTimer>

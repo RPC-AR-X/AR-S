@@ -1,10 +1,12 @@
-#include "oauth2_device_flow.hpp"
-#include "json_network_manager.hpp"
-
+//Libs
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkReply>
 #include <QUrlQuery>
+
+#include "oauth2_device_flow.hpp"
+#include "json_network_manager.hpp"
+
 
 namespace Ars::Deck {
 

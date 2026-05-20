@@ -1,12 +1,12 @@
 #pragma once
 
-//Related header
-#include <providers/ipipeline_provider.h>
-#include "PipelineAdaptor.h"
-
-//C++ Standard Includes
+//Standard Includes
 #include <memory>
 #include <vector>
+
+#include <providers/ipipeline_provider.h>
+
+#include "PipelineAdaptor.h"
 
 class DbusAdapter final : public sdbus::AdaptorInterfaces<org::ars::sonar::Interface_adaptor> {
 public:

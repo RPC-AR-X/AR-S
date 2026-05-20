@@ -1,5 +1,7 @@
-#include "adapters/dbus_adapter.h"
+//Libs
 #include <nlohmann/json.hpp>
+
+#include "adapters/dbus_adapter.h"
 #include "providers/github_provider.h"
 
 DbusAdapter::DbusAdapter(sdbus::IConnection& connection, sdbus::ObjectPath objectPath) : AdaptorInterfaces(connection, std::move(objectPath)) {

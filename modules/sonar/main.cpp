@@ -1,4 +1,4 @@
-//C++ Standard Includes
+//Standard Includes
 #include <signal.h>
 #include <csignal>
 #include <exception>

@@ -1,9 +1,10 @@
-#include "auth_manager.hpp"
-
+//Libs
 #include <QDBusReply>
 #include <QDebug>
 #include <QDesktopServices>
 #include <QUrl>
+
+#include "auth_manager.hpp"
 
 const QString SONAR_SERVICE_NAME = "org.ars.sonar";
 const QString SONAR_OBJECT_PATH = "/org/ars/sonar";
