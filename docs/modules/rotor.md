@@ -28,7 +28,7 @@ The module is divided into several isolated components with strict responsibilit
     * User confirmation layer for sensitive operations.
     * Displays secure approval dialogs before protected actions are executed.
 
-* **Vault**:
+* **Secret Credential Gateway**:
     * Secure credential mediation daemon built around the system secret storage backend.
     * Acts as the only authorized gateway between Rotor components and KWallet.
     * Enforces credential access policy and controlled secret delivery.
