@@ -51,6 +51,16 @@ target_link_libraries(sonar PRIVATE
 
 target_compile_definitions(sonar PRIVATE CPPHTTPLIB_OPENSSL_SUPPORT)
 
+if(CMAKE_BUILD_TYPE MATCHES "Debug")
+    set(
+            CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}
+            -Werror -g -fno-omit-frame-pointer -fsanitize=undefined -fsanitize=address"
+    )
+    target_link_options(deck
+            BEFORE PUBLIC -fsanitize=undefined PUBLIC -fsanitize=address
+    )
+endif()
+
 install(TARGETS sonar DESTINATION bin)
 install(
         FILES "${dbus-api_SOURCE_DIR}/sonar/fetchPipelineData.xml"

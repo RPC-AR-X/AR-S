@@ -27,6 +27,16 @@ target_link_libraries(deck PRIVATE
     Qt6::NetworkAuth
 )
 
+if(CMAKE_BUILD_TYPE MATCHES "Debug")
+    set(
+            CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}
+            -Werror -g -fno-omit-frame-pointer -fsanitize=undefined -fsanitize=address"
+    )
+    target_link_options(deck
+            BEFORE PUBLIC -fsanitize=undefined PUBLIC -fsanitize=address
+    )
+endif()
+
 install(TARGETS deck
     DESTINATION bin
 )
