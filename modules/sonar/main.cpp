@@ -26,7 +26,7 @@ int main() {
 
     try {
         sdbus::ServiceName serviceName{"org.ars.sonar"};
-        auto connection = sdbus::createSessionBusConnection(serviceName);
+        auto connection = sdbus::createSystemBusConnection(serviceName);
 
         sdbus::ObjectPath objectPath{"/org/ars/sonar"};
         DbusAdapter adapter(*connection, std::move(objectPath));

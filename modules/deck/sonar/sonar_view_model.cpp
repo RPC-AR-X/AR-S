@@ -12,7 +12,7 @@ const QString SONAR_INTERFACE_NAME = "org.ars.sonar.Interface";
 
 namespace Ars::Deck {
 SonarViewModel::SonarViewModel(QObject* parent) {
-    m_dbusInterface = new QDBusInterface(SONAR_SERVICE_NAME, SONAR_OBJECT_PATH, SONAR_INTERFACE_NAME, QDBusConnection::sessionBus(), this);
+    m_dbusInterface = new QDBusInterface(SONAR_SERVICE_NAME, SONAR_OBJECT_PATH, SONAR_INTERFACE_NAME, QDBusConnection::systemBus(), this);
 
     if (!m_dbusInterface->isValid()) {
         qWarning() << "D-Bus interface is NOT valid:" << SONAR_SERVICE_NAME;
