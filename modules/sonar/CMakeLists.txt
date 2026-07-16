@@ -56,7 +56,7 @@ if(CMAKE_BUILD_TYPE MATCHES "Debug")
             CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}
             -Werror -g -fno-omit-frame-pointer -fsanitize=undefined -fsanitize=address"
     )
-    target_link_options(deck
+    target_link_options(sonar
             BEFORE PUBLIC -fsanitize=undefined PUBLIC -fsanitize=address
     )
 endif()
