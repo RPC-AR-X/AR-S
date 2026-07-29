@@ -24,19 +24,19 @@ The module is divided into several isolated components with strict responsibilit
     * Translates raw byte streams into structured JSON messages and sends responses back to the browser extension.
     * Contains the internal **Access Controller** layer responsible for validating and filtering privileged requests before execution.
 
-* **Verification Agent**:
+* **Verifyd**:
     * User confirmation layer for sensitive operations.
     * Displays secure approval dialogs before protected actions are executed.
 
-* **Secret Credential Gateway**:
+* **Secretd**:
     * Secure credential mediation daemon built around the system secret storage backend.
     * Acts as the only authorized gateway between Rotor components and KWallet.
     * Enforces credential access policy and controlled secret delivery.
 
-* **Profile Swapper**:
+* **Swapd**:
     * Manages transitions between browser environments.
     * Separates lightweight session serialization from profile directory manipulation.
 
-* **State Switcher**:
+* **Switchd**:
     * Tray-based orchestration daemon responsible for coordinating mode transitions.
     * Controls the browser restart lifecycle and transition progress states.
