@@ -12,6 +12,8 @@ FetchContent_MakeAvailable(httplib)
 
 set(GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR}/generated)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(DBUS_INTERFACE_XML "${CMAKE_SOURCE_DIR}/protocols/dbus/sonar/fetchPipelineData.xml")
 set(DBUS_ADAPTOR_H "${CMAKE_CURRENT_BINARY_DIR}/generated/PipelineAdaptor.h")
 set(DBUS_PROXY_H "${CMAKE_CURRENT_BINARY_DIR}/generated/PipelineProxy.h")

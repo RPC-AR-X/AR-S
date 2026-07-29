@@ -1,4 +1,7 @@
 find_package(OpenSSL REQUIRED)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 if(NOT TARGET OpenSSL::SSL)
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(OPENSSL REQUIRED openssl)
