@@ -1,12 +1,6 @@
-Checks: "-*,readability-identifier-naming \
-  cert-*,\
-  performance-*,\"
+Checks: '-*,readability-identifier-naming,cert-*,performance-*'
 CheckOptions:
-  - key:             readability-identifier-naming.MemberCase
-    value:           camelBack
-  - key:             readability-identifier-naming.MemberPrefix
-    value:           m_
-  - key:             readability-identifier-naming.PrivateMemberPrefix
-    value:           m_
-  - key:             readability-identifier-naming.ProtectedMemberPrefix
-    value:           m_
+  readability-identifier-naming.MemberCase: camelBack
+  readability-identifier-naming.MemberPrefix: m_
+  readability-identifier-naming.PrivateMemberPrefix: m_
+  readability-identifier-naming.ProtectedMemberPrefix: m_
