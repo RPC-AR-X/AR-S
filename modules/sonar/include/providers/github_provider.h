@@ -19,6 +19,5 @@ public:
     std::string GetProviderName() const override;
 
 private:
-    std::string current_token_;
-    std::string pipeline_info;
+    std::string m_current_token;
 };

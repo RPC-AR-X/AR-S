@@ -53,7 +53,7 @@ void AuthManager::onAuthFinished() {
     qInfo() << "Authentication Successful!";
     qInfo() << "Access Token:" << token;
 
-    QDBusReply<bool> reply = m_dbusInterface->call("UpdateToken", "github", token);
+    QDBusReply<bool> reply = m_dbusInterface->call("UpdateToken", "Github", token);
     if (reply.isValid() && reply.value()) {
         qInfo() << "Token successfully sent to daemon";
     } else {

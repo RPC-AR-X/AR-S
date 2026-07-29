@@ -14,7 +14,6 @@
 #include <adapters/dbus_adapter.h>
 
 int main() {
-
     int signal;
     sigset_t set;
 
@@ -35,7 +34,7 @@ int main() {
         sigwait(&set, &signal);
 
         adapter.emitSonarStopWorkSignal("Sonar exit gracefully...");
-        std::cout << "Signal emitted..." << std::endl;
+        std::cout << "Signal emitted..." << "\n";
 
         connection->leaveEventLoop();
 
@@ -44,7 +43,7 @@ int main() {
         }
 
     } catch (std::exception& e) {
-        std::cout << "ERROR: " << e.what() << std::endl;
+        std::cout << "ERROR: " << e.what() << "\n";
         return 1;
     }
 
