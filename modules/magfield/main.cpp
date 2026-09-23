@@ -34,9 +34,9 @@ int main() {
             auto deviceType = currentConnectionInfo.get<unsigned int>();
 
             if (deviceType == 1) {
-                std::cout << "Ethernet" << std::endl;
+                std::cout << "Ethernet" << '\n';
             } else if (deviceType == 2) {
-                std::cout << "Wifi" << std::endl;
+                std::cout << "Wifi" << '\n';
             }
         }
     }

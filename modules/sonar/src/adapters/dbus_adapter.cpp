@@ -5,20 +5,20 @@
 #include "providers/github_provider.h"
 
 DbusAdapter::DbusAdapter(sdbus::IConnection& connection, sdbus::ObjectPath objectPath) : AdaptorInterfaces(connection, std::move(objectPath)) {
-    std::cout << "DbusAdapter constructor" << std::endl;
+    std::cout << "DbusAdapter constructor\n";
     providers_.push_back(std::make_unique<GitHubProvider>());
 
     registerAdaptor();
 }
 
 DbusAdapter::~DbusAdapter() {
-    std::cout << "DbusAdapter destructor" << std::endl;
+    std::cout << "DbusAdapter destructor\n";
     unregisterAdaptor();
 }
 
 std::string DbusAdapter::PipelineStatusFetch() {
     using namespace std::chrono;
-    std::cout << "PipelineStatusFetch called" << std::endl;
+    std::cout << "PipelineStatusFetch called\n";
 
     nlohmann::json results_array = nlohmann::json::array();
 
@@ -29,7 +29,7 @@ std::string DbusAdapter::PipelineStatusFetch() {
 
         auto cpu_end = high_resolution_clock::now();
         auto cpu_duration_us = duration_cast<microseconds>(cpu_end - cpu_start).count();
-        std::cout << "[TIMING] CPU-bound (adapter dispatch + polymorphism): " << cpu_duration_us << " us" << std::endl;
+        std::cout << "[TIMING] CPU-bound (adapter dispatch + polymorphism): " << cpu_duration_us << " us\n";
 
         if (!provider_json_string.empty()) {
             try {
@@ -43,7 +43,7 @@ std::string DbusAdapter::PipelineStatusFetch() {
                     results_array.push_back(provider_json);
                 }
             } catch (const nlohmann::json::exception& e) {
-                std::cerr << "JSON Merge Error: " << e.what() << std::endl;
+                std::cerr << "JSON Merge Error: " << e.what() << "\n";
             }
         }
     }
@@ -52,7 +52,7 @@ std::string DbusAdapter::PipelineStatusFetch() {
 }
 
 bool DbusAdapter::UpdateToken(const std::string& providerName, const std::string& token) {
-    std::cout << providerName << std::endl;
+    std::cout << providerName << "\n";
 
     for (const auto& provider : providers_) {
         if (provider->GetProviderName() == providerName) {
@@ -61,7 +61,7 @@ bool DbusAdapter::UpdateToken(const std::string& providerName, const std::string
         }
     }
 
-    std::cerr << "Error: Provider not found: " << providerName << std::endl;
+    std::cerr << "Error: Provider not found: " << providerName << "\n";
     return false;
 }
 
