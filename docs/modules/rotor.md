@@ -18,6 +18,33 @@ The module is designed around reversible state transitions, allowing advanced in
 
 The module is divided into several isolated components with strict responsibility boundaries:
 
+Rotor consists of two logically independent chains:
+
+- **State Switching (or Profile Swapping)**:
+  Handles browser lifecycle and profile switching.
+  - Switchd
+  - Swapd
+
+- **Secure Access**:
+  Handles secure data access.
+  - ReD
+  - Verifyd
+  - Secretd
+
+## Components
+
+### State Transition 
+
+* **Swapd**:
+  * Manages transitions between browser environments.
+  * Separates lightweight session serialization from profile directory manipulation.
+
+* **Switchd**:
+  * Tray-based orchestration daemon responsible for coordinating mode transitions.
+  * Controls the browser restart lifecycle and transition progress states.
+
+### Secure Access
+
 * **ReD (Relay Daemon)**:
     * Receives requests from the browser extension and coordinates privileged operations.
     * Collects requested data from Vault only after successful verification approval from the Verification Agent.
@@ -32,11 +59,3 @@ The module is divided into several isolated components with strict responsibilit
     * Secure credential mediation daemon built around the system secret storage backend.
     * Acts as the only authorized gateway between Rotor components and KWallet.
     * Enforces credential access policy and controlled secret delivery.
-
-* **Swapd**:
-    * Manages transitions between browser environments.
-    * Separates lightweight session serialization from profile directory manipulation.
-
-* **Switchd**:
-    * Tray-based orchestration daemon responsible for coordinating mode transitions.
-    * Controls the browser restart lifecycle and transition progress states.
