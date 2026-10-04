@@ -1,10 +1,13 @@
 //Standard includes
 #include <string>
 
+//Libs
+#include <spdlog/spdlog.h>
+
 #include "providers/github_provider.h"
 
 GitHubProvider::GitHubProvider() {
-    std::cout << "Clear Start. Wait for token..." << "\n";
+    spdlog::info("Clear Start. Wait for token...");
 }
 
 std::string GitHubProvider::FetchStatusAsJson() const{
@@ -26,7 +29,7 @@ std::string GitHubProvider::FetchStatusAsJson() const{
         auto result = cli.Get("/repos/RPC-AR-X/AR-S/actions/runs", headers);
 
         if (result && result->status == 200) {
-            std::cout << "Status Code: " << result->status << "\n";
+            spdlog::info("Status Code: {}", result->status);
             if (!result->body.empty()) {
                 try {
                     nlohmann::json raw_json = nlohmann::json::parse(result->body);
@@ -53,24 +56,24 @@ std::string GitHubProvider::FetchStatusAsJson() const{
 
                     return pipeline_info;
                 } catch (const nlohmann::json::exception& e) {
-                    std::cerr << "JSON parsing error: " << e.what() << "\n";
+                    spdlog::error("JSON parsing error: {}", e.what());
                     return "";
                 }
             }
             return pipeline_info;
         } else if (result) {
-            std::cerr << "HTTP Error: Status " << result->status << "\n";
+            spdlog::error("HTTP Error: Status {}", result->status);
             if (!result->body.empty()) {
-                std::cerr << "Response: " << result->body << "\n";
+                spdlog::error("Response: {}", result->body);
             }
             return "";
         } else {
             auto err = result.error();
-            std::cerr << "HTTP request failed: " << httplib::to_string(err) << "\n";
+            spdlog::error("HTTP request failed: {}", httplib::to_string(err));
             return "";
         }
     } catch (const std::exception& e) {
-        std::cerr << "Exception in StartFetching: " << e.what() << "\n";
+        spdlog::error("Exception in StartFetching: {}", e.what());
         return "";
     }
 }
@@ -81,5 +84,5 @@ std::string GitHubProvider::GetProviderName() const {
 
 void GitHubProvider::SetToken(const std::string& token) {
     m_current_token = token;
-    std::cout << "Token Updated" << "\n";
+    spdlog::info("Token Updated");
 }

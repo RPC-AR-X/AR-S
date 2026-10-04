@@ -2,7 +2,6 @@
 #include <signal.h>
 #include <csignal>
 #include <exception>
-#include <iostream>
 #include <memory>
 #include <thread>
 
@@ -10,6 +9,7 @@
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/IObject.h>
 #include <sdbus-c++/Types.h>
+#include <spdlog/spdlog.h>
 
 #include <adapters/dbus_adapter.h>
 
@@ -34,7 +34,7 @@ int main() {
         sigwait(&set, &signal);
 
         adapter.emitSonarStopWorkSignal("Sonar exit gracefully...");
-        std::cout << "Signal emitted..." << "\n";
+        spdlog::info("Signal emitted...");
 
         connection->leaveEventLoop();
 
@@ -42,8 +42,8 @@ int main() {
             eventLoopThread.join();
         }
 
-    } catch (std::exception& e) {
-        std::cout << "ERROR: " << e.what() << "\n";
+    } catch (const std::exception& e) {
+        spdlog::error("ERROR: {}", e.what());
         return 1;
     }
 
