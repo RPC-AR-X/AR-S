@@ -1,21 +1,23 @@
 //Standard Includes
-#include <iostream>
 #include <unistd.h>
+
+//Libs
+#include <spdlog/spdlog.h>
 
 #include "fd_handler.hh"
 
 FDHandler::FDHandler(int fd) : m_fd(fd) {
-    std::cout << "Default ctor" << std::endl;
+    spdlog::debug("FDHandler constructed");
 }
 
 FDHandler::FDHandler(FDHandler&& other) noexcept {
-    std::cout << "Moving ctor" << std::endl;
+    spdlog::debug("FDHandler move-constructed");
     this->m_fd = other.m_fd;
     other.m_fd = -1;
 }
 
 FDHandler::~FDHandler() {
-    std::cout << "Default destructor" << std::endl;
+    spdlog::debug("FDHandler destroyed");
 
     if (this->m_fd != -1) {
         close(this->m_fd);
@@ -23,7 +25,7 @@ FDHandler::~FDHandler() {
 }
 
 FDHandler& FDHandler::operator=(FDHandler&& other) {
-    std::cout << "Moving assignment operator" << std::endl;
+    spdlog::debug("FDHandler move-assigned");
 
     if (this != &other) {
         if (this->m_fd != -1) {

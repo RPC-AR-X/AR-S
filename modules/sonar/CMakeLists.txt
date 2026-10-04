@@ -3,6 +3,7 @@ find_package(ZLIB REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(sdbus-c++ REQUIRED)
 find_package(sdbus-c++-tools REQUIRED)
+find_package(spdlog REQUIRED)
 
 FetchContent_Declare(httplib SYSTEM
         GIT_REPOSITORY https://github.com/yhirose/cpp-httplib
@@ -48,6 +49,7 @@ target_link_libraries(sonar PRIVATE
         httplib
         nlohmann_json::nlohmann_json
         SDBusCpp::sdbus-c++
+        spdlog::spdlog
         ${SDBUSCPP_GENERATED_INTERFACES_LIB}
 )
 

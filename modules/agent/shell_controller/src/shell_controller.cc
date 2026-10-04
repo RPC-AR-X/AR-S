@@ -6,6 +6,9 @@
 #include <termios.h>
 #include <unistd.h>
 
+//Libs
+#include <spdlog/spdlog.h>
+
 #include "shell_controller.hh"
 
 namespace Ars::Controller::Shell {
@@ -40,7 +43,7 @@ ShellReactor::ShellReactor(FDHandler&& master_fd_handler, pid_t pid, OutputCallb
         while (m_running == true) {
             int nfds = epoll_wait(m_epoll_fd_handler.get(), events, 10, -1);
             if (nfds == -1) {
-                std::cerr << "epoll_wait error\n";
+                spdlog::error("epoll_wait failed: {}", strerror(errno));
                 break;
             }
 

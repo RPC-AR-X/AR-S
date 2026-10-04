@@ -15,8 +15,6 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     libssl-dev \
     pkg-config \
-    clang \
-    lld \
     zlib1g-dev \
     qt6-base-dev \
     qt6-declarative-dev \
@@ -36,10 +34,11 @@ RUN apt-get update && apt-get install -y \
     libnl-genl-3-dev \
     protobuf-compiler-grpc \
     protobuf-compiler \
+    libspdlog-dev\
     && rm -rf /var/lib/apt/lists/*
 
-ENV CC=clang
-ENV CXX=clang++
+ENV CC=gcc
+ENV CXX=g++
 
 RUN useradd -m -s /bin/bash ars && echo "ars:password" | chpasswd
 RUN echo "ars ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
