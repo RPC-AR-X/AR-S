@@ -36,6 +36,7 @@ RUN apt-get update && apt-get install -y \
     libnl-genl-3-dev \
     protobuf-compiler-grpc \
     protobuf-compiler \
+    libspdlog-dev\
     && rm -rf /var/lib/apt/lists/*
 
 ENV CC=clang
