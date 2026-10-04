@@ -11,4 +11,5 @@ target_link_libraries(shell_controller PUBLIC
     agent_proto_lib      
     gRPC::grpc++
     protobuf::libprotobuf
+    spdlog::spdlog
 )

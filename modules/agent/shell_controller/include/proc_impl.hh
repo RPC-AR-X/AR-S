@@ -4,10 +4,12 @@
 #include <fcntl.h>
 #include <pty.h>
 
-//gRPC Includes
+//Libs
 #include <grpcpp/grpcpp.h>
 #include "agent.grpc.pb.h"
 #include "agent.pb.h"
+
+#include <spdlog/spdlog.h>
 
 #include "shell_controller.hh"
 #include "fd_handler.hh"
@@ -45,7 +47,7 @@ public:
 
             return reactor;
         } catch (const std::exception& e) {
-            std::cerr << "ShellReactor creation failed: " << e.what() << std::endl;
+            spdlog::error("ShellReactor creation failed: {}", e.what());
             return new AbortedReactor(grpc::Status(grpc::StatusCode::INTERNAL, e.what()));
         }
     }

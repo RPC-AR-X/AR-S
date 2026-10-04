@@ -17,6 +17,7 @@ endif()
 
 find_package(gRPC REQUIRED)
 find_package(Protobuf REQUIRED)
+find_package(spdlog REQUIRED)
 
 add_subdirectory(shell_controller)
 
@@ -29,6 +30,7 @@ target_link_libraries(agent PRIVATE
     OpenSSL::Crypto
     gRPC::grpc++_reflection
     gRPC::grpc++
+    spdlog::spdlog
 )
 
 install(TARGETS agent DESTINATION bin)

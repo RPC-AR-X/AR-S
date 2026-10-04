@@ -2,15 +2,16 @@
 #include <signal.h>
 #include <string.h>
 
-#include <iostream>
 #include <memory>
 #include <string>
 #include <stdexcept>
 
-//gRPC includes
+//Libs
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <grpcpp/grpcpp.h>
 #include "agent.grpc.pb.h"
+
+#include <spdlog/spdlog.h>
 
 #include "proc_impl.hh"
 
@@ -40,10 +41,10 @@ int main(int argc, char** argv) {
     std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
 
     if (!server) {
-        std::cerr << "Failed to start server" << std::endl;
+        spdlog::error("Failed to start server");
         return -1;
     } else {
-        std::cout << "Server started on port 50051" << std::endl;
+        spdlog::info("Server started on port 50051");
         server->Wait();
     }
     return 0;
