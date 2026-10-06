@@ -35,9 +35,9 @@ Rotor consists of two logically independent chains:
 
 ### State Transition 
 
-* **Swapd**:
-  * Manages transitions between browser environments.
-  * Separates lightweight session serialization from profile directory manipulation.
+* **Profiled**:
+  * Manages browser profile state and transitions between browser environments.
+  * Owns profile directory manipulation and configuration state management.
 
 * **Switchd**:
   * Tray-based orchestration daemon responsible for coordinating mode transitions.
