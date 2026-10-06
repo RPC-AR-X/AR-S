@@ -23,7 +23,7 @@ Rotor consists of two logically independent chains:
 - **State Switching (or Profile Swapping)**:
   Handles browser lifecycle and profile switching.
   - Switchd
-  - Swapd
+  - Profiled
 
 - **Secure Access**:
   Handles secure data access.

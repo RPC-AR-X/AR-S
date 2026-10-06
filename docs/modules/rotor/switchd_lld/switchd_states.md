@@ -22,6 +22,6 @@
 
 ### Actions / Events That Are Not Switchd States
 
-- `DBUS_SWAPD_REQUEST` — D-Bus call to Swapd.
+- `DBUS_PROFILED_REQUEST` — D-Bus call to Profiled.
 - `NOT_RECEIVED` — result of a failed IPC call.
-- Serialization `ABORTED` as an internal Swapd event is represented by the general `ABORTED` state in Switchd.
+- Serialization `ABORTED` as an internal Profiled event is represented by the general `ABORTED` state in Switchd.
