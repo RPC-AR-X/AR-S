@@ -61,10 +61,3 @@ cmake --build build
 > Component-specific build instructions and configuration details are located in the `docs/` directory.
 
 ---
-
-## Roadmap
-
-- [x] **Autumn 2025** - MVP of Deck (UI) with Sonar
-- [x] **Winter 2025-2026** - JSON view in Deck & Backend Refactoring
-- [x] **Spring 2026** - MVP of Interlink
-- [ ] **Summer - Autumn 2026** - MVP of Rotor
