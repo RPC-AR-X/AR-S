@@ -1,4 +1,4 @@
-FROM ubuntu:rolling
+FROM ubuntu:24.04
 
 ENV TZ=Europe/Berlin
 ENV DEBIAN_FRONTEND=noninteractive
